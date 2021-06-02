@@ -59,15 +59,20 @@
                 </v-img> 
 
                 <v-list>
+                    <!-- Account Setting -->
                     <v-list-item link>
                       <v-icon color="black" class="mr-3">mdi-tools</v-icon>
                       <v-list-item-title class="font-weight-medium" >Configuration</v-list-item-title>
                     </v-list-item>
+                    <!-- Account Setting -->
 
+                    <!-- Logout Button -->
                     <v-list-item link  @click="logout">
                       <v-icon color="black" class="mr-3">mdi-logout</v-icon>
                       <v-list-item-title class="font-weight-medium" >Logout</v-list-item-title>
                     </v-list-item>
+                    <!-- Logout Button -->
+
                 </v-list>
             </v-card>
             <!-- Pop over Card -->
@@ -99,12 +104,13 @@
               <v-card-text>
                 <v-container>
                   <v-row>
-
+                    <!-- Nomor SHM Field -->
                     <v-col cols="12">
                       <v-text-field color="black" label="Nomor SHM" required hint="Biasanya terdapat pada bagian kanan bawah sampul. Contoh : 10.15.22.05.3.01234">
                       </v-text-field>
                     </v-col>
-
+                    <!-- Nomor SHM Field -->
+                    <!-- Provinsi SHM Field -->
                     <v-col cols="12">
                       <v-select color="black"
                         :items="['Aceh', 'Sumatera Utara', 'Sumatera Barat', 'Riau', 'Kepulauan Riau', 'Jambi', 'Sumatera Selatan', 'Kepulauan Bangka Belitung', 'Bengkulu',
@@ -112,22 +118,26 @@
                                   'Kalimantan Barat', 'Kalimantan Tengah', 'Provinsi Kalimantan Selatan', 'Kalimantan Timur', 'Kalimantan Utara', 'Sulawesi Utara', 'Gorontalo',
                                   'Sulawesi Tengah', 'Sulawesi Barat', 'Provinsi Sulawesi Selatan', 'Sulawesi Tenggara', 'Maluku', 'Maluku Utara ', 'Papua Barat', 'Papua']"
                         label="Provinsi"
-                        required
-                      ></v-select>
-
+                        required>
+                    </v-select>
+                    <!-- Provinsi SHM Field -->
+                    <!-- Kabupaten / Kota SHM Field -->
                     </v-col>
                     <v-col cols="12" sm="6">
                       <v-text-field color="black" label="Kabupaten / Kota" required></v-text-field>
                     </v-col>
-
+                    <!-- Kabupaten / Kota SHM Field -->
+                    <!-- Kelurahan SHM Field -->
                     <v-col cols="12" sm="6">
                       <v-text-field color="black" label="Kelurahan" required></v-text-field>
                     </v-col>
-
+                    <!-- Kelurahan SHM Field -->
+                    <!-- Nama Pemegang SHM Field -->
                     <v-col cols="12">
                       <v-text-field color="black" label="Nama Pemegang Hak" required></v-text-field>
                     </v-col>
-
+                    <!-- Nama Pemegang SHM Field -->
+                    <!-- Kalendar SHM Field -->
                     <v-col cols="12">
                       <v-menu
                         ref="menu"
@@ -156,36 +166,46 @@
                         </v-date-picker>
                       </v-menu>
                     </v-col>
-
+                    <!-- Kalendar SHM Field -->
+                    <!-- Luas Tanah Field -->
                     <v-col cols="12">
                       <v-text-field color="black" label="Luas" required hint="Dalam m2. Contoh : Luas tanah = 100m2 maka masukkan angka '100' "></v-text-field>
                     </v-col>
-
+                    <v-col cols="12">
+                      <v-file-input
+                        accept="application/pdf"
+                        placeholder="Pick a Document"
+                        prepend-icon="mdi-file-document"
+                        label="Upload Document"
+                        color="Black"
+                        required>
+                      </v-file-input>
+                    </v-col>
+                    <!-- Luas Tanah Field -->
                   </v-row>
                 </v-container>
               </v-card-text>
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn
-                  color="black"
-                  text
-                  @click="dialog = false">
+                <!-- Close Button -->
+                <v-btn color="black" text @click="dialog = false">
                   Close
                 </v-btn>
-                <v-btn
-                  color="b1ack"
-                  text
-                  @click="dialog = false">
+                <!-- Close Button -->
+                <!-- Save Button -->
+                <v-btn color="b1ack" text @click="dialog = false">
                   Save
                 </v-btn>
+                <!-- Save Button -->
               </v-card-actions>
               
             </v-card>
           </v-dialog>
-
         </v-card>
+        
       </v-col>
+      <!-- Upload a Document -->
       <!-- List Uploaded Document -->
       <v-col align="center" justify="center">
         <v-card class="ma-6" outlined elevation="2" style="border: 10px solid black;">
