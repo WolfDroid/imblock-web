@@ -298,7 +298,12 @@
                   </v-btn>
                   <!-- Close Button -->
                   <!-- Save Button -->
-                  <v-btn color="b1ack" text @click="saveData">
+                  <v-btn
+                    color="b1ack"
+                    text
+                    @click="saveData"
+                    :loading="loadingRegister"
+                  >
                     Save
                   </v-btn>
                   <!-- Save Button -->
@@ -350,6 +355,7 @@ export default {
   },
   data: () => ({
     loading: false,
+    loadingRegister: false,
     selection: 1,
     loggedIn: false,
     dialog: false,
@@ -404,6 +410,7 @@ export default {
       // this.dialog = false;
 
       try {
+        this.loadingRegister = true;
         const formData = new FormData();
         formData.append("file", this.file);
         formData.append("email", localStorage.getItem("email"));
@@ -447,8 +454,10 @@ export default {
         );
         console.log(registerResponse.data);
         console.log("Success");
+        this.loadingRegister = false;
         this.dialog = false;
       } catch (error) {
+        this.loadingRegister = false;
         console.log(error);
       }
     },
