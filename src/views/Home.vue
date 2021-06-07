@@ -628,6 +628,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
+          localStorage.clear();
           this.$router.replace({ name: "Login" });
         });
     },
