@@ -298,7 +298,12 @@
                   </v-btn>
                   <!-- Close Button -->
                   <!-- Save Button -->
-                  <v-btn color="b1ack" text @click="saveData" :loading="loadingRegister">
+                  <v-btn
+                    color="b1ack"
+                    text
+                    @click="saveData"
+                    :loading="loadingRegister"
+                  >
                     Save
                   </v-btn>
                   <!-- Save Button -->
@@ -315,19 +320,27 @@
             class="ma-6"
             outlined
             elevation="2"
-            style="border: 10px solid black;">
+            style="border: 10px solid black;"
+          >
             <!-- Upload Document Icon -->
             <v-img
               class="mx-10 mt-5"
               src="@/assets/uploadedlisticon.png"
               max-width="300px"
-              max-height="300px">
+              max-height="300px"
+            >
             </v-img>
             <!-- Upload Document Icon -->
             <v-dialog v-model="dialogUploaded" max-width="800px">
               <template v-slot:activator="{ on, trigger }">
                 <!-- Uploaded Document Button -->
-                <v-btn class="mb-10" dark v-bind="trigger" v-on="on">
+                <v-btn
+                  class="mb-10"
+                  dark
+                  v-bind="trigger"
+                  v-on="on"
+                  @click="manageUploadedOnClick"
+                >
                   Manage Uploaded Document
                 </v-btn>
                 <!-- Uploaded Document Button -->
@@ -339,114 +352,135 @@
                 </v-card-title>
 
                 <v-card-text class="mt-6">
-                   <v-container>
-                     <v-row>
-                       <!-- Uploaded Document Table -->
-                       <v-col cols="12">
-                          <v-data-table
-                            :headers="headers"
-                            :items="data"
-                            :items-per-page="5"
-                            :expanded.sync="expanded"
-                            :single-expand="singleExpand"
-                            item-key="nomorSHM"
-                            show-expand
-                            class="elevation-2">
-                              <!-- Delete Item Dialogue -->
-                              <template v-slot:[`item.actions`]="{ item }">
-                                <!-- Delete Item -->
-                                <v-icon small color="dark" @click="deleteItem(item)">
-                                  mdi-delete
-                                </v-icon>
-                                <!-- Delete Item -->
-                              </template>
-                              <!-- Delete Item Dialogue -->
-                              <!-- Details Item Expandable -->
-                              <template v-slot:expanded-item="{ item }">
-                                <v-container class="my-4">
-                                  <!-- Headers -->
-                                  <v-row align="center" class="font-weight-bold">
-                                    <v-col align="center" justify="center">
-                                      <p> Nama Pemilik </p>
-                                    </v-col>
-                                    <v-col align="center" justify="center">
-                                      <p> Tahun Terbitan </p>
-                                    </v-col>
-                                    <v-col align="center" justify="center">
-                                      <p> Luas Tanah </p>
-                                    </v-col>
-                                  </v-row>
-                                  <!-- Headers -->
-                                  <!-- Filling  -->
-                                  <v-row align="center" class="mt-n8">
-                                    <v-col align="center">
-                                      <p> {{item.namaPemilik}} </p>
-                                    </v-col>
-                                    <v-col align="center">
-                                      <p> {{item.tahunPenerbitan}} </p>
-                                    </v-col>
-                                    <v-col align="center">
-                                      <p> {{item.luasTanah}} </p>
-                                    </v-col>
-                                  </v-row>
-                                  <!-- Filling -->
-                                  <!-- Headers -->
-                                  <v-row align="center" class="mt-n6 font-weight-bold">
-                                    <v-col align="center" justify="center">
-                                      <p> Kelurahan </p>
-                                    </v-col>
-                                    <v-col align="center" justify="center">
-                                      <p> Kabupaten / Kota </p>
-                                    </v-col>
-                                    <v-col align="center" justify="center">
-                                      <p> Provinsi </p>
-                                    </v-col>
-                                  </v-row>
-                                  <!-- Headers -->
-                                  <!-- Filling  -->
-                                  <v-row align="center" class="mt-n8">
-                                    <v-col align="center">
-                                      <p> {{item.letakKelurahan}} </p>
-                                    </v-col>
-                                    <v-col align="center">
-                                      <p> {{item.letakKabupaten}} </p>
-                                    </v-col>
-                                    <v-col align="center">
-                                      <p> {{item.letakProvinsi}} </p>
-                                    </v-col>
-                                    
-                                  </v-row>
-                                  <!-- Filling -->
-                                  <!-- Download Document -->
-                                  <v-row class="mt-n4">
-                                    <v-col align="center" justify="center">
-                                      <v-btn elevation="1">
-                                      <v-icon dark class="mr-4"> mdi-download </v-icon>
-                                        Download Document
-                                      </v-btn>
-                                    </v-col>
-                                  </v-row>
-                                </v-container>
-                              </template>
-                              <!-- Details Item Expandable -->
-                          </v-data-table>
-                          <!-- Confirm Delete Dialogue -->
-                          <v-dialog v-model="dialogDelete" max-width="500px">
-                            <v-card>
-                              <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-                              <v-card-actions>
-                                <v-spacer></v-spacer>
-                                    <v-btn color="gray" @click="closeDelete">Cancel</v-btn>
-                                    <v-btn color="red darken-1 white--text" @click="deleteItemConfirm">OK</v-btn>
-                                <v-spacer></v-spacer>
-                              </v-card-actions>
-                            </v-card>
-                          </v-dialog>
-                          <!-- Confirm Delete Dialogue -->
-                       </v-col>
-                       <!-- Uploaded Document Table -->
-                     </v-row>
-                   </v-container>
+                  <v-container>
+                    <v-row>
+                      <!-- Uploaded Document Table -->
+                      <v-col cols="12">
+                        <v-data-table
+                          :headers="headers"
+                          :items="listUploaded"
+                          :items-per-page="5"
+                          :expanded.sync="expanded"
+                          :single-expand="singleExpand"
+                          item-key="record_id"
+                          show-expand
+                          class="elevation-2"
+                        >
+                          <!-- Delete Item Dialogue -->
+                          <template v-slot:[`item.actions`]="{ item }">
+                            <!-- Delete Item -->
+                            <v-icon
+                              small
+                              color="dark"
+                              @click="deleteItem(item)"
+                            >
+                              mdi-delete
+                            </v-icon>
+                            <!-- Delete Item -->
+                          </template>
+                          <!-- Delete Item Dialogue -->
+                          <!-- Details Item Expandable -->
+                          <template v-slot:expanded-item="{ item }">
+                            <v-container class="my-4">
+                              <!-- Headers -->
+                              <v-row align="center" class="font-weight-bold">
+                                <v-col align="center" justify="center">
+                                  <p>Nama Pemilik</p>
+                                </v-col>
+                                <v-col align="center" justify="center">
+                                  <p>Tahun Terbitan</p>
+                                </v-col>
+                                <v-col align="center" justify="center">
+                                  <p>Luas Tanah</p>
+                                </v-col>
+                              </v-row>
+                              <!-- Headers -->
+                              <!-- Filling  -->
+                              <v-row align="center" class="mt-n8">
+                                <v-col align="center">
+                                  <p>{{ item.owner_name }}</p>
+                                </v-col>
+                                <v-col align="center">
+                                  <p>{{ item.penerbitan }}</p>
+                                </v-col>
+                                <v-col align="center">
+                                  <p>{{ item.luas }}</p>
+                                </v-col>
+                              </v-row>
+                              <!-- Filling -->
+                              <!-- Headers -->
+                              <v-row
+                                align="center"
+                                class="mt-n6 font-weight-bold"
+                              >
+                                <v-col align="center" justify="center">
+                                  <p>Kelurahan</p>
+                                </v-col>
+                                <v-col align="center" justify="center">
+                                  <p>Kabupaten / Kota</p>
+                                </v-col>
+                                <v-col align="center" justify="center">
+                                  <p>Provinsi</p>
+                                </v-col>
+                              </v-row>
+                              <!-- Headers -->
+                              <!-- Filling  -->
+                              <v-row align="center" class="mt-n8">
+                                <v-col align="center">
+                                  <p>{{ item.kelurahan }}</p>
+                                </v-col>
+                                <v-col align="center">
+                                  <p>{{ item.kabupaten }}</p>
+                                </v-col>
+                                <v-col align="center">
+                                  <p>{{ item.provinsi }}</p>
+                                </v-col>
+                              </v-row>
+                              <!-- Filling -->
+                              <!-- Download Document -->
+                              <v-row class="mt-n4">
+                                <v-col align="center" justify="center">
+                                  <v-btn
+                                    elevation="1"
+                                    @click="downloadFile(item)"
+                                  >
+                                    <v-icon dark class="mr-4">
+                                      mdi-download
+                                    </v-icon>
+                                    Download Document
+                                  </v-btn>
+                                </v-col>
+                              </v-row>
+                            </v-container>
+                          </template>
+                          <!-- Details Item Expandable -->
+                        </v-data-table>
+                        <!-- Confirm Delete Dialogue -->
+                        <v-dialog v-model="dialogDelete" max-width="500px">
+                          <v-card>
+                            <v-card-title class="text-h5"
+                              >Are you sure you want to delete this
+                              item?</v-card-title
+                            >
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn color="gray" @click="closeDelete"
+                                >Cancel</v-btn
+                              >
+                              <v-btn
+                                color="red darken-1 white--text"
+                                @click="deleteItemConfirm"
+                                >OK</v-btn
+                              >
+                              <v-spacer></v-spacer>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
+                        <!-- Confirm Delete Dialogue -->
+                      </v-col>
+                      <!-- Uploaded Document Table -->
+                    </v-row>
+                  </v-container>
                 </v-card-text>
 
                 <v-card-actions>
@@ -460,7 +494,6 @@
               </v-card>
               <!-- Document List -->
             </v-dialog>
-            
           </v-card>
         </v-col>
         <!-- List Uploaded Document -->
@@ -478,6 +511,7 @@ import firebase from "firebase";
 //Import Map Getters
 import { mapGetters } from "vuex";
 import axios from "axios";
+import fileDownload from "js-file-download";
 
 export default {
   name: "home",
@@ -492,35 +526,36 @@ export default {
     dialog: false,
     dialogUploaded: false,
     dialogDelete: false,
-    dialog2:false,
+    dialog2: false,
     activePicker: null,
     date: null,
     singleExpand: true,
     menu: false,
 
     headers: [
-      { text: 'Nomor SHM', align: 'start', sortable: false, value: 'nomorSHM'},
-      { text: 'Uploaded On', value: 'uploadDate' },
-      { text: 'Actions', value: 'actions', sortable: false },
-      { text: '', value: 'data-table-expand' },
+      { text: "Nomor SHM", align: "start", sortable: false, value: "no_shm" },
+      // { text: 'Uploaded On', value: 'uploadDate' },
+      { text: "Actions", value: "actions", sortable: false },
+      { text: "", value: "data-table-expand" },
     ],
+
+    listUploaded: [],
 
     data: [
       {
-        nomorSHM: 'abcdefgh',
-        uploadDate : '19-08-1999',
+        nomorSHM: "abcdefgh",
+        uploadDate: "19-08-1999",
         letakProvinsi: "Jakarta",
         letakKabupaten: "Jakarta Timur",
         letakKelurahan: "Duren Sawit",
         namaPemilik: "Yoo Jimin",
         tahunPenerbitan: "2021",
-        luasTanah : "1000"
+        luasTanah: "1000",
       },
       {
-        nomorSHM: 'data2',
-        uploadDate : '19-08-1999'
+        nomorSHM: "data2",
+        uploadDate: "19-08-1999",
       },
-
     ],
     expanded: [],
 
@@ -534,7 +569,6 @@ export default {
     fileName: "",
     fileCid: "",
     file: null,
-
   }),
   watch: {
     user(auth) {
@@ -546,24 +580,45 @@ export default {
     },
     menu(val) {
       val && setTimeout(() => (this.activePicker = "YEAR"));
-    }
+    },
   },
   methods: {
-    deleteItem (item) {
-      this.editedIndex = this.data.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialogDelete = true
+    deleteItem(item) {
+      this.editedIndex = this.data.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      // console.log(this.editedItem);
+      this.dialogDelete = true;
     },
-    deleteItemConfirm () {
-      this.data.splice(this.editedIndex, 1)
-      this.closeDelete()
+    async deleteItemConfirm() {
+      console.log(this.editedItem);
+      try {
+        console.log("deleting item");
+        var params = new URLSearchParams();
+        params.append("record_id", this.editedItem.record_id);
+
+        var response = await axios.post(
+          "https://api.catena.id/v1/imblock/fabric/record/delete",
+          params,
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          }
+        );
+        this.listUploaded.splice(this.editedIndex, 1);
+        console.log(response.data);
+        console.log("Data deleted");
+        this.closeDelete();
+      } catch (error) {
+        console.log(error);
+      }
     },
-    closeDelete () {
-        this.dialogDelete = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
     },
     reserve() {
       this.loading = true;
@@ -634,6 +689,41 @@ export default {
         this.dialog = false;
       } catch (error) {
         this.loadingRegister = false;
+        console.log(error);
+      }
+    },
+    async manageUploadedOnClick() {
+      console.log("managed");
+      try {
+        var url =
+          "https://api.catena.id/v1/imblock/fabric/record/search?mode=email&query=" +
+          localStorage.getItem("email");
+        var response = await axios.get(url);
+        this.listUploaded = response.data;
+        console.log(this.listUploaded);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async downloadFile(item) {
+      console.log(item);
+      try {
+        console.log("downloading file");
+        var response = await axios.get(
+          "https://api.catena.id/v1/imblock/ipfs/user/fetch",
+          {
+            params: {
+              cid: item.cert_cid,
+              email: localStorage.getItem("email"),
+            },
+            withCredentials: true,
+            responseType: "blob",
+          }
+        );
+
+        fileDownload(response.data, item.cert_filename);
+        console.log("file downloaded");
+      } catch (error) {
         console.log(error);
       }
     },
