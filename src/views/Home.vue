@@ -347,7 +347,11 @@
                             :headers="headers"
                             :items="data"
                             :items-per-page="5"
-                            class="elevation-1">
+                            :expanded.sync="expanded"
+                            :single-expand="singleExpand"
+                            item-key="nomorSHM"
+                            show-expand
+                            class="elevation-2">
                               <!-- Delete Item Dialogue -->
                               <template v-slot:[`item.actions`]="{ item }">
                                 <!-- Delete Item -->
@@ -357,6 +361,74 @@
                                 <!-- Delete Item -->
                               </template>
                               <!-- Delete Item Dialogue -->
+                              <!-- Details Item Expandable -->
+                              <template v-slot:expanded-item="{ item }">
+                                <v-container class="my-4">
+                                  <!-- Headers -->
+                                  <v-row align="center" class="font-weight-bold">
+                                    <v-col align="center" justify="center">
+                                      <p> Nama Pemilik </p>
+                                    </v-col>
+                                    <v-col align="center" justify="center">
+                                      <p> Tahun Terbitan </p>
+                                    </v-col>
+                                    <v-col align="center" justify="center">
+                                      <p> Luas Tanah </p>
+                                    </v-col>
+                                  </v-row>
+                                  <!-- Headers -->
+                                  <!-- Filling  -->
+                                  <v-row align="center" class="mt-n8">
+                                    <v-col align="center">
+                                      <p> {{item.namaPemilik}} </p>
+                                    </v-col>
+                                    <v-col align="center">
+                                      <p> {{item.tahunPenerbitan}} </p>
+                                    </v-col>
+                                    <v-col align="center">
+                                      <p> {{item.luasTanah}} </p>
+                                    </v-col>
+                                  </v-row>
+                                  <!-- Filling -->
+                                  <!-- Headers -->
+                                  <v-row align="center" class="mt-n6 font-weight-bold">
+                                    <v-col align="center" justify="center">
+                                      <p> Kelurahan </p>
+                                    </v-col>
+                                    <v-col align="center" justify="center">
+                                      <p> Kabupaten / Kota </p>
+                                    </v-col>
+                                    <v-col align="center" justify="center">
+                                      <p> Provinsi </p>
+                                    </v-col>
+                                  </v-row>
+                                  <!-- Headers -->
+                                  <!-- Filling  -->
+                                  <v-row align="center" class="mt-n8">
+                                    <v-col align="center">
+                                      <p> {{item.letakKelurahan}} </p>
+                                    </v-col>
+                                    <v-col align="center">
+                                      <p> {{item.letakKabupaten}} </p>
+                                    </v-col>
+                                    <v-col align="center">
+                                      <p> {{item.letakProvinsi}} </p>
+                                    </v-col>
+                                    
+                                  </v-row>
+                                  <!-- Filling -->
+                                  <!-- Download Document -->
+                                  <v-row class="mt-n4">
+                                    <v-col align="center" justify="center">
+                                      <v-btn elevation="1">
+                                      <v-icon dark class="mr-4"> mdi-download </v-icon>
+                                        Download Document
+                                      </v-btn>
+                                    </v-col>
+                                  </v-row>
+                                </v-container>
+                              </template>
+                              <!-- Details Item Expandable -->
                           </v-data-table>
                           <!-- Confirm Delete Dialogue -->
                           <v-dialog v-model="dialogDelete" max-width="500px">
@@ -423,20 +495,34 @@ export default {
     dialog2:false,
     activePicker: null,
     date: null,
+    singleExpand: true,
     menu: false,
 
     headers: [
-      { text: 'Hash', align: 'start', sortable: false, value: 'hash'},
+      { text: 'Nomor SHM', align: 'start', sortable: false, value: 'nomorSHM'},
       { text: 'Uploaded On', value: 'uploadDate' },
-      { text: 'Actions', value: 'actions', sortable: false }
+      { text: 'Actions', value: 'actions', sortable: false },
+      { text: '', value: 'data-table-expand' },
     ],
 
     data: [
       {
-        hash: 'abcdefgh',
+        nomorSHM: 'abcdefgh',
+        uploadDate : '19-08-1999',
+        letakProvinsi: "Jakarta",
+        letakKabupaten: "Jakarta Timur",
+        letakKelurahan: "Duren Sawit",
+        namaPemilik: "Yoo Jimin",
+        tahunPenerbitan: "2021",
+        luasTanah : "1000"
+      },
+      {
+        nomorSHM: 'data2',
         uploadDate : '19-08-1999'
-      }
+      },
+
     ],
+    expanded: [],
 
     noShm: "",
     provinsi: "",
@@ -448,6 +534,7 @@ export default {
     fileName: "",
     fileCid: "",
     file: null,
+
   }),
   watch: {
     user(auth) {
@@ -462,14 +549,6 @@ export default {
     }
   },
   methods: {
-    initialize (){
-      this.data = [
-        {
-          hash: 'goblok',
-          uploadDate : 'goblok'
-        }
-      ]
-    },
     deleteItem (item) {
       this.editedIndex = this.data.indexOf(item)
       this.editedItem = Object.assign({}, item)
