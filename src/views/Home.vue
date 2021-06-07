@@ -515,11 +515,7 @@ export default {
         namaPemilik: "Yoo Jimin",
         tahunPenerbitan: "2021",
         luasTanah : "1000"
-      },
-      {
-        nomorSHM: 'data2',
-        uploadDate : '19-08-1999'
-      },
+      }
 
     ],
     expanded: [],
