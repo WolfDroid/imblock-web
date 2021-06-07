@@ -135,8 +135,8 @@
                 </v-btn>
               </template>
               <v-card>
-                <v-card-title>
-                  <span class="headline">Upload SHM Data</span>
+                <v-card-title class="black white--text">
+                  Upload SHM Data
                 </v-card-title>
                 <v-card-text>
                   <v-container>
@@ -298,12 +298,7 @@
                   </v-btn>
                   <!-- Close Button -->
                   <!-- Save Button -->
-                  <v-btn
-                    color="b1ack"
-                    text
-                    @click="saveData"
-                    :loading="loadingRegister"
-                  >
+                  <v-btn color="b1ack" text @click="saveData" :loading="loadingRegister">
                     Save
                   </v-btn>
                   <!-- Save Button -->
@@ -313,23 +308,87 @@
           </v-card>
         </v-col>
         <!-- Upload a Document -->
+
         <!-- List Uploaded Document -->
         <v-col align="center" justify="center">
           <v-card
             class="ma-6"
             outlined
             elevation="2"
-            style="border: 10px solid black;"
-          >
+            style="border: 10px solid black;">
+            <!-- Upload Document Icon -->
             <v-img
               class="mx-10 mt-5"
               src="@/assets/uploadedlisticon.png"
               max-width="300px"
-              max-height="300px"
-            ></v-img>
-            <v-btn class="mb-10" dark>
-              Uploaded Document List
-            </v-btn>
+              max-height="300px">
+            </v-img>
+            <!-- Upload Document Icon -->
+            <v-dialog v-model="dialogUploaded" max-width="800px">
+              <template v-slot:activator="{ on, trigger }">
+                <!-- Uploaded Document Button -->
+                <v-btn class="mb-10" dark v-bind="trigger" v-on="on">
+                  Manage Uploaded Document
+                </v-btn>
+                <!-- Uploaded Document Button -->
+              </template>
+              <!-- Document List -->
+              <v-card>
+                <v-card-title class="black white--text">
+                  Upload Document
+                </v-card-title>
+
+                <v-card-text class="mt-6">
+                   <v-container>
+                     <v-row>
+                       <!-- Uploaded Document Table -->
+                       <v-col cols="12">
+                          <v-data-table
+                            :headers="headers"
+                            :items="data"
+                            :items-per-page="5"
+                            class="elevation-1">
+                              <!-- Delete Item Dialogue -->
+                              <template v-slot:[`item.actions`]="{ item }">
+                                <!-- Delete Item -->
+                                <v-icon small color="dark" @click="deleteItem(item)">
+                                  mdi-delete
+                                </v-icon>
+                                <!-- Delete Item -->
+                              </template>
+                              <!-- Delete Item Dialogue -->
+                          </v-data-table>
+                          <!-- Confirm Delete Dialogue -->
+                          <v-dialog v-model="dialogDelete" max-width="500px">
+                            <v-card>
+                              <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+                              <v-card-actions>
+                                <v-spacer></v-spacer>
+                                    <v-btn color="gray" @click="closeDelete">Cancel</v-btn>
+                                    <v-btn color="red darken-1 white--text" @click="deleteItemConfirm">OK</v-btn>
+                                <v-spacer></v-spacer>
+                              </v-card-actions>
+                            </v-card>
+                          </v-dialog>
+                          <!-- Confirm Delete Dialogue -->
+                       </v-col>
+                       <!-- Uploaded Document Table -->
+                     </v-row>
+                   </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <!-- Close Button -->
+                  <v-btn color="black" text @click="dialogUploaded = false">
+                    Close
+                  </v-btn>
+                  <!-- Close Button -->
+                </v-card-actions>
+              </v-card>
+              <!-- Document List -->
+            </v-dialog>
+            
           </v-card>
         </v-col>
         <!-- List Uploaded Document -->
@@ -359,11 +418,25 @@ export default {
     selection: 1,
     loggedIn: false,
     dialog: false,
+    dialogUploaded: false,
+    dialogDelete: false,
+    dialog2:false,
     activePicker: null,
     date: null,
     menu: false,
 
-    data: {},
+    headers: [
+      { text: 'Hash', align: 'start', sortable: false, value: 'hash'},
+      { text: 'Uploaded On', value: 'uploadDate' },
+      { text: 'Actions', value: 'actions', sortable: false }
+    ],
+
+    data: [
+      {
+        hash: 'abcdefgh',
+        uploadDate : '19-08-1999'
+      }
+    ],
 
     noShm: "",
     provinsi: "",
@@ -386,9 +459,33 @@ export default {
     },
     menu(val) {
       val && setTimeout(() => (this.activePicker = "YEAR"));
-    },
+    }
   },
   methods: {
+    initialize (){
+      this.data = [
+        {
+          hash: 'goblok',
+          uploadDate : 'goblok'
+        }
+      ]
+    },
+    deleteItem (item) {
+      this.editedIndex = this.data.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialogDelete = true
+    },
+    deleteItemConfirm () {
+      this.data.splice(this.editedIndex, 1)
+      this.closeDelete()
+    },
+    closeDelete () {
+        this.dialogDelete = false
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        })
+    },
     reserve() {
       this.loading = true;
       setTimeout(() => (this.loading = false), 2000);
