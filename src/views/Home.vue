@@ -148,7 +148,7 @@
                           label="Nomor SHM"
                           required
                           hint="Biasanya terdapat pada bagian kanan bawah sampul. Contoh : 10.15.22.05.3.01234"
-                          v-model="data.noShm"
+                          v-model="noShm"
                         >
                         </v-text-field>
                       </v-col>
@@ -194,7 +194,7 @@
                             'Papua',
                           ]"
                           label="Provinsi"
-                          v-model="data.provinsi"
+                          v-model="provinsi"
                           required
                         >
                         </v-select>
@@ -205,7 +205,7 @@
                         <v-text-field
                           color="black"
                           label="Kabupaten / Kota"
-                          v-model="data.kabupaten"
+                          v-model="kabupaten"
                           required
                         ></v-text-field>
                       </v-col>
@@ -215,7 +215,7 @@
                         <v-text-field
                           color="black"
                           label="Kelurahan"
-                          v-model="data.kelurahan"
+                          v-model="kelurahan"
                           required
                         ></v-text-field>
                       </v-col>
@@ -225,7 +225,7 @@
                         <v-text-field
                           color="black"
                           label="Nama Pemegang Hak"
-                          v-model="data.name"
+                          v-model="name"
                           required
                         ></v-text-field>
                       </v-col>
@@ -242,7 +242,7 @@
                         >
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                              v-model="data.date"
+                              v-model="date"
                               label="Penerbitan"
                               prepend-icon="mdi-calendar"
                               readonly
@@ -254,7 +254,7 @@
                           </template>
                           <v-date-picker
                             color="black"
-                            v-model="data.date"
+                            v-model="date"
                             :active-picker.sync="activePicker"
                             :max="new Date().toISOString().substr(0, 10)"
                             @change="save"
@@ -270,7 +270,7 @@
                           label="Luas"
                           required
                           hint="Dalam m2. Contoh : Luas tanah = 100m2 maka masukkan angka '100' "
-                          v-model="data.luas"
+                          v-model="luas"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12">
@@ -540,20 +540,8 @@ export default {
     ],
 
     listUploaded: [],
+    expanded:[],
 
-    data: [
-      {
-        nomorSHM: "abcdefgh",
-        uploadDate: "19-08-1999",
-        letakProvinsi: "Jakarta",
-        letakKabupaten: "Jakarta Timur",
-        letakKelurahan: "Duren Sawit",
-        namaPemilik: "Yoo Jimin",
-        tahunPenerbitan: "2021",
-        luasTanah: "1000",
-      },
-    ],
-    expanded: [],
 
     noShm: "",
     provinsi: "",

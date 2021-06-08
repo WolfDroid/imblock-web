@@ -143,15 +143,14 @@ export default {
     },
     handleSubmit() {
       //Log the user in
-      console.log(this.email);
-      console.log(this.password);
+      //console.log(this.email);
+      //console.log(this.password);
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           (user) => {
             // console.log(user);
-            console.log(user.user.email);
             localStorage.setItem("email", user.user.email);
           },
           (error) => {

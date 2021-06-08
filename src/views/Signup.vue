@@ -129,7 +129,7 @@ export default {
       .createUserWithEmailAndPassword(this.email, this.password)
       .then(
         user=>{
-          console.log(user.data);
+          //console.log(user.data);
           alert("Sucessfully created, please check your email");
           this.$router.replace({ name: "Login" });
           user.user.sendEmailVerification();
