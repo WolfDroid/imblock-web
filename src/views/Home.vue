@@ -568,7 +568,7 @@ export default {
   },
   methods: {
     deleteItem(item) {
-      this.editedIndex = this.data.indexOf(item);
+      this.editedIndex = this.listUploaded.indexOf(item);
       this.editedItem = Object.assign({}, item);
       // console.log(this.editedItem);
       this.dialogDelete = true;
@@ -647,14 +647,14 @@ export default {
         console.log(ipfsResponse);
 
         const params = new URLSearchParams();
-        params.append("owner_name", this.data.name);
+        params.append("owner_name", this.name);
         params.append("email", localStorage.getItem("email"));
-        params.append("no_shm", this.data.noShm);
-        params.append("provinsi", this.data.provinsi);
-        params.append("kabupaten", this.data.kabupaten);
-        params.append("kelurahan", this.data.kelurahan);
-        params.append("penerbitan", this.data.date);
-        params.append("luas", this.data.luas);
+        params.append("no_shm", this.noShm);
+        params.append("provinsi", this.provinsi);
+        params.append("kabupaten", this.kabupaten);
+        params.append("kelurahan", this.kelurahan);
+        params.append("penerbitan", this.date);
+        params.append("luas", this.luas);
         params.append("cert_filename", ipfsResponse.data.name);
         params.append("cert_cid", ipfsResponse.data.hash);
 
